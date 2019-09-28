@@ -67,18 +67,10 @@ class Teacher extends Person {
   constructor(name, age, gender, subject) {
     super(name, age, gender);
     this.subject = subject;
+    this.stundentList = [];
   }
-  static stundenToTeacher(teachers, alumns) {
-    let studentList = [];
-    for (const teacher of teachers) {
-      if (teacher['group'] === alumns['group']) {
-        studentList += { teachers, ...alumns };
-      }
-    }
-    return studentList;
-  }
+  static stundenToTeacher() {}
 }
-
 class Student extends Person {
   constructor(name, age, gender, course, group) {
     super(name, age, gender);
@@ -97,16 +89,18 @@ const teacherList = teacherNames.map((name, index) => {
   return new Teacher(name, ageTeacher[index], genderTeacher[index], subject[index]);
 });
 Person.showAtributes();
-// const myTeacher = new Teacher();
 const alumno1 = Student.registerAStudent('María', 20, 'female', 2, 'Historia');
-const alumno2 = Student.registerAStudent('Alberto', 18, 'male', 1, 'Lengua');
-const alumno3 = Student.registerAStudent('Lucas', 18, 'male', 3, 'Física');
+const alumno2 = Student.registerAStudent('Alberto', 18, 'male', 1, 'Física');
+const alumno3 = Student.registerAStudent('Lucas', 18, 'male', 3, 'Lengua');
 const listAlumns = [alumno1, alumno2, alumno3];
 
+for (let i = 0; i < listAlumns.length; i++) {
+  for (let j = 0; j < listAlumns.length; j++)
+    if (teacherList[i].subject === listAlumns[j].group) {
+      teacherList[i].stundentList = listAlumns[j];
+    }
+}
 console.log(teacherList);
-console.log(listAlumns);
-
-console.log(Teacher.stundenToTeacher(teacherList, listAlumns));
 
 //    * * * * * * * * * * * * * * * * * * * * *
 //     * 3. D A D O   E L E C T R Ã“ N I C O *
